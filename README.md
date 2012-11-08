@@ -6,7 +6,7 @@ VolumeSlider
 Installation
 ------------
 
-This plugin allows you to add a native volume slider (MPVolumeView) to your app.
+PhoneGap / Cordova iOS plugin that allows you to add a native volume slider (MPVolumeView) to your app.
 
 Add the plugin much like any other:
 
