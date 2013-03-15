@@ -44,6 +44,10 @@
 		return;	
 	}
 	
+	if (self.mpVolumeViewParentView != NULL) {
+        	return;//already created, don't need to create it again
+	}
+	
 	CGFloat originx,originy,width;
 	CGFloat height = 30;
 	
