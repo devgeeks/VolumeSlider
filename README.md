@@ -31,6 +31,8 @@ function onDeviceReady()
 volumeSlider.hideVolumeSlider();
 ```
 
+### NOTE: The iOS Simulator does not show MPVolumeViews. To see the slider you have to be running on an actual device.
+
 ## License
 
 The MIT License
