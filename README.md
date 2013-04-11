@@ -13,7 +13,7 @@ Add the plugin much like any other:
 1.      Add the VolumeSlider.h and VolumeSlider.m classes to your Plugins folder in Xcode
 2.      Add the VolumeSlider.js file to your www folder
 3.	Add the VolumeSlider.js to your html file. eg: `<script type="text/javascript" charset="utf-8" src="VolumeSlider.js"></script>`
-4.      Add the plugin to the Cordova.plist under Plugins (key: "VolumeSlider" value: "VolumeSlider")
+4.      Add the plugin to your config.xml: `<plugin name="VolumeSlider" value="VolumeSlider" />` (or if you are running an older version of PhoneGap / Cordova, Cordova.plist under Plugins (key: "VolumeSlider" value: "VolumeSlider"))
 
 ### Example
 ```javascript
