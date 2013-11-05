@@ -49,7 +49,7 @@
 	originx = [[arguments objectAtIndex:0] floatValue];
 	originy = [[arguments objectAtIndex:1] floatValue];
 	width = [[arguments objectAtIndex:2] floatValue];
-	if (argc < 4) {
+	if (argc > 3) {
 		height = [[arguments objectAtIndex:3] floatValue];
 	}
 	
