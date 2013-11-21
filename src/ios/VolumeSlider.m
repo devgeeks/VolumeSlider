@@ -2,7 +2,7 @@
 //  	VolumeSlider.m
 //  	Volume Slider Cordova Plugin
 //
-//  	Created by Tommy-Carlos Williams on 20/07/11.
+//  	Created by Tommy-Carlos Williams on 20/07/11. Updated by Samuel Michelot on 11/05/1013
 //  	Copyright 2011 Tommy-Carlos Williams. All rights reserved.
 //      MIT Licensed
 //
@@ -24,24 +24,23 @@
     return self;
 }
 
-- (void)dealloc
-{	
-	[mpVolumeViewParentView release];
-	[myVolumeView release];
-    [super dealloc];
-}
-
 
 #pragma mark -
 #pragma mark VolumeSlider
 
-- (void) createVolumeSlider:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
-{	
-	self.callbackId = arguments.pop;
+- (void) createVolumeSlider:(CDVInvokedUrlCommand *)command
+{
+	NSArray* arguments = [command arguments];
+    
+	self.callbackId = command.callbackId;
 	NSUInteger argc = [arguments count];
 	
 	if (argc < 3) { // at a minimum we need x origin, y origin and width...
 		return;	
+	}
+	
+	if (self.mpVolumeViewParentView != NULL) {
+        	return;//already created, don't need to create it again
 	}
 	
 	CGFloat originx,originy,width;
@@ -50,7 +49,7 @@
 	originx = [[arguments objectAtIndex:0] floatValue];
 	originy = [[arguments objectAtIndex:1] floatValue];
 	width = [[arguments objectAtIndex:2] floatValue];
-	if (argc < 4) {
+	if (argc > 3) {
 		height = [[arguments objectAtIndex:3] floatValue];
 	}
 	
@@ -60,7 +59,8 @@
 								 width, 
 								 height
 								 );
-	self.mpVolumeViewParentView = [[[UIView alloc] initWithFrame:viewRect] autorelease];
+    self.mpVolumeViewParentView = [[UIView alloc] initWithFrame:viewRect];
+
 	[self.webView.superview addSubview:mpVolumeViewParentView];
 	
 	mpVolumeViewParentView.backgroundColor = [UIColor clearColor];
@@ -70,13 +70,13 @@
 	self.myVolumeView.showsVolumeSlider = NO;
 }
 
-- (void)showVolumeSlider:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+- (void)showVolumeSlider:(CDVInvokedUrlCommand *)command
 {
 	self.myVolumeView.showsVolumeSlider = YES;
 	self.mpVolumeViewParentView.hidden = NO;
 }
 
-- (void)hideVolumeSlider:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+- (void)hideVolumeSlider:(CDVInvokedUrlCommand *)command
 {
 	self.mpVolumeViewParentView.hidden = YES;
 	self.myVolumeView.showsVolumeSlider = NO;
