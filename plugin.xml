@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+        id="org.devgeeks.volumeslider"
+        version="1.0.0">
+
+    <name>VolumeSlider</name>
+
+    <description>Show a volume slider to change the volume of the app without the physical buttons</description>
+    <keywords>volume, slider, change, set, sound, ios</keywords>
+    <license>MIT License</license>
+
+    <author>Tommy-Carlos Williams (github.com/devgeeks)</author>
+
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <js-module src="www/VolumeSlider.js" name="VolumeSlider">
+        <clobbers target="plugins.volumeSlider" />
+    </js-module>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+    		<feature name="VolumeSlider">
+    			<param name="ios-package" value="VolumeSlider"/>
+    		</feature>
+        </config-file>
+
+    	<header-file src="src/ios/VolumeSlider.h" />
+    	<source-file src="src/ios/VolumeSlider.m" />
+ 		<framework src="MediaPlayer.framework" weak="true" />
+    </platform>
+
+</plugin>

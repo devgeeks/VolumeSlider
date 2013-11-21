@@ -1,7 +1,7 @@
 VolumeSlider
 ============
 
-*Updated for Cordova 2.0*
+*Updated for Cordova 3.0* by [@orbitaloop](https://github.com/orbitaloop)
 
 Installation
 ------------
@@ -10,10 +10,16 @@ PhoneGap / Cordova iOS plugin that allows you to add a native volume slider (MPV
 
 Add the plugin much like any other:
 
-1.      Add the VolumeSlider.h and VolumeSlider.m classes to your Plugins folder in Xcode
-2.      Add the VolumeSlider.js file to your www folder
-3.	Add the VolumeSlider.js to your html file. eg: `<script type="text/javascript" charset="utf-8" src="VolumeSlider.js"></script>`
-4.      Add the plugin to your config.xml: `<plugin name="VolumeSlider" value="VolumeSlider" />` (or if you are running an older version of PhoneGap / Cordova, Cordova.plist under Plugins (key: "VolumeSlider" value: "VolumeSlider"))
+### For Cordova 3.0.x:
+
+1. To add this plugin use one of the below: 
+	- `cordova plugin add https://github.com/devgeeks/VolumeSlider.git` or 
+	- `phonegap local plugin add https://github.com/devgeeks/VolumeSlider.git`
+2. To remove this plugin use one of the below: 
+	- `cordova plugin remove org.devgeeks.volumeslider`
+	- `phonegap local plugin remove org.devgeeks.volumeslider`
+
+### NOTE: The iOS Simulator does not show MPVolumeViews. To see the slider you have to be running on an actual device.
 
 ### Example
 ```javascript
@@ -31,7 +37,6 @@ function onDeviceReady()
 volumeSlider.hideVolumeSlider();
 ```
 
-### NOTE: The iOS Simulator does not show MPVolumeViews. To see the slider you have to be running on an actual device.
 
 ## License
 
