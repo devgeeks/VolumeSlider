@@ -14,7 +14,7 @@ var exec = require('cordova/exec');
 module.exports = {
 
     /**
-	 * Create a volume slider.
+	 * Create a volume slider, and save the user's current set volume.
 	 */
 	createVolumeSlider : function(originx,originy,width,height) {
 		exec(null, null, "VolumeSlider","createVolumeSlider", [originx, originy, width, height]);
@@ -34,14 +34,14 @@ module.exports = {
 	},
 
     /**
-     * Max out the volume slider, and save the user set volume
+     * Set the device's master volume
      */
-    maxVolumeSlider : function() {
-        exec(null, null, "VolumeSlider","maxVolumeSlider", []);
+    setVolumeSlider : function(set_volume) {
+        exec(null, null, "VolumeSlider","setVolumeSlider", [set_volume]);
     },
 
     /**
-     * Reset the volume slider to the original user volume
+     * Reset the volume slider to the original user volume present uon creation of this slider
      */
     resetVolumeSlider : function() {
         exec(null, null, "VolumeSlider","resetVolumeSlider", []);

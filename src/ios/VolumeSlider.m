@@ -82,6 +82,7 @@ UISlider* volumeViewSlider = nil;
             break;
         }
     }
+    userVolume = volumeViewSlider.value;
 
 }
 
@@ -98,12 +99,20 @@ UISlider* volumeViewSlider = nil;
 	self.myVolumeView.showsVolumeSlider = NO;
 }
 
-- (void)maxVolumeSlider:(CDVInvokedUrlCommand *)command
+- (void)setVolumeSlider:(CDVInvokedUrlCommand *)command
 {
-    userVolume = volumeViewSlider.value;
     self.mpVolumeViewParentView.hidden = YES;
 	self.myVolumeView.showsVolumeSlider = NO;
-    [volumeViewSlider setValue:1.0f animated:NO];
+
+	NSArray* arguments = [command arguments];
+	NSUInteger argc = [arguments count];
+
+    if (argc < 1) { // at a minimum we need the value to be set...
+        return;
+    }
+    float setVolume = [[arguments objectAtIndex:0] floatValue];
+
+    [volumeViewSlider setValue:setVolume animated:NO];
     [volumeViewSlider sendActionsForControlEvents:UIControlEventTouchUpInside];
 
 }
