@@ -34,14 +34,14 @@ module.exports = {
 	},
 
     /**
-     * Hide the volume slider
+     * Max out the volume slider, and save the user set volume
      */
     maxVolumeSlider : function() {
         exec(null, null, "VolumeSlider","maxVolumeSlider", []);
     },
 
     /**
-     * Hide the volume slider
+     * Reset the volume slider to the original user volume
      */
     resetVolumeSlider : function() {
         exec(null, null, "VolumeSlider","resetVolumeSlider", []);
