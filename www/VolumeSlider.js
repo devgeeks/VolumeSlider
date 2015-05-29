@@ -31,5 +31,19 @@ module.exports = {
 	 */
 	hideVolumeSlider : function() {
 		exec(null, null, "VolumeSlider","hideVolumeSlider", []);
-	}
+	},
+
+    /**
+     * Hide the volume slider
+     */
+    maxVolumeSlider : function() {
+        exec(null, null, "VolumeSlider","maxVolumeSlider", []);
+    },
+
+    /**
+     * Hide the volume slider
+     */
+    resetVolumeSlider : function() {
+        exec(null, null, "VolumeSlider","resetVolumeSlider", []);
+    }
 };
