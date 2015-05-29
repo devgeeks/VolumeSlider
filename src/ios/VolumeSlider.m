@@ -14,6 +14,9 @@
 
 @synthesize mpVolumeViewParentView, myVolumeView, callbackId;
 
+float userVolume  = 0.2;
+UISlider* volumeViewSlider = nil;
+
 #ifndef __IPHONE_3_0
 @synthesize webView;
 #endif
@@ -30,7 +33,8 @@
 
 - (void) createVolumeSlider:(CDVInvokedUrlCommand *)command
 {
-	NSArray* arguments = [command arguments];
+	NSLog(@"In createVolumeSlider");
+    NSArray* arguments = [command arguments];
     
 	self.callbackId = command.callbackId;
 	NSUInteger argc = [arguments count];
@@ -40,7 +44,7 @@
 	}
 	
 	if (self.mpVolumeViewParentView != NULL) {
-        	return;//already created, don't need to create it again
+       // 	return;//already created, don't need to create it again
 	}
 	
 	CGFloat originx,originy,width;
@@ -68,12 +72,24 @@
 	[[MPVolumeView alloc] initWithFrame: mpVolumeViewParentView.bounds];
 	[mpVolumeViewParentView addSubview: myVolumeView];
 	self.myVolumeView.showsVolumeSlider = NO;
+
+
+    volumeViewSlider = nil;
+    for (UIView *view in [self.myVolumeView subviews]){
+        if ([view.class.description isEqualToString:@"MPVolumeSlider"]){
+            volumeViewSlider = (UISlider*)view;
+            NSLog(@"Found MPVolumeslider :  %f" ,userVolume );
+            break;
+        }
+    }
+
 }
 
 - (void)showVolumeSlider:(CDVInvokedUrlCommand *)command
 {
 	self.myVolumeView.showsVolumeSlider = YES;
 	self.mpVolumeViewParentView.hidden = NO;
+
 }
 
 - (void)hideVolumeSlider:(CDVInvokedUrlCommand *)command
@@ -82,6 +98,22 @@
 	self.myVolumeView.showsVolumeSlider = NO;
 }
 
+- (void)maxVolumeSlider:(CDVInvokedUrlCommand *)command
+{
+    userVolume = volumeViewSlider.value;
+    self.mpVolumeViewParentView.hidden = YES;
+	self.myVolumeView.showsVolumeSlider = NO;
+    [volumeViewSlider setValue:1.0f animated:NO];
+    [volumeViewSlider sendActionsForControlEvents:UIControlEventTouchUpInside];
+
+}
+
+- (void)resetVolumeSlider:(CDVInvokedUrlCommand *)command
+{
+    [volumeViewSlider setValue:userVolume animated:NO];
+    [volumeViewSlider sendActionsForControlEvents:UIControlEventTouchUpInside];
+
+}
 
 
 @end
