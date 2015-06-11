@@ -32,5 +32,15 @@
     	<source-file src="src/ios/VolumeSlider.m" />
  		<framework src="MediaPlayer.framework" weak="true" />
     </platform>
+    
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+			<feature name="VolumeSlider">
+		        <param name="android-package" value="org.devgeeks.volumeslider.VolumeSlider" />
+		    </feature>
+        </config-file>
 
+        <source-file src="src/android/VolumeSlider.java" target-dir="src/org/devgeeks/volumeslider" />
+    </platform>
 </plugin>
