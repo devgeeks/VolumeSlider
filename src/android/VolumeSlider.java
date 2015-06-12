@@ -18,11 +18,16 @@ public class VolumeSlider extends CordovaPlugin {
     private SeekBar volumeSeekBar;
     private AudioManager audioManager;
     private static final String TAG = "volume_slider";
-    int current_volume = .2;
+    double current_volume = 0.2;
 
     private int cssToViewUnit(double size) {
         return (int)Math.abs(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float)size,
             cordova.getActivity().getResources().getDisplayMetrics()));
+    }
+
+    private double cssToViewUnitDouble(double size) {
+        return TypedValue.applyDimension(TypedValue.TYPE_NULL, (float)size,
+                cordova.getActivity().getResources().getDisplayMetrics());
     }
 
     @Override
@@ -61,11 +66,12 @@ public class VolumeSlider extends CordovaPlugin {
             return true;
         }
         if (action.equals("setVolumeSlider")) {
-            final int vol = cssToViewUnit(args.getDouble(0));
+            final double volume = cssToViewUnitDouble(args.getDouble(0));
             cordova.getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    setVolumeSlider(vol);
+                    Log.d(TAG, "DESIRED VOLUME: " + volume);
+                    setVolumeSlider(volume);
                 }
             });
             return true;
@@ -102,7 +108,6 @@ public class VolumeSlider extends CordovaPlugin {
     }
 
     private void createVolumeSlider(int x, int y, int width, int height) {
-        Log.d(TAG, "creating the slider" );
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(width, height);
         params.leftMargin = x;
         params.topMargin = y;
@@ -112,10 +117,9 @@ public class VolumeSlider extends CordovaPlugin {
         volumeSeekBar = new SeekBar(context);
         bindVolumeSeekBarToAudioManager(volumeSeekBar, context);
         
-        // Record current set media volume to revert to
+        // Record current media volume to revert to with resetVolumeSlider()
         current_volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, current_volume, 0);
-        Log.d(TAG, "current_volume = " + current_volume);
+        Log.d(TAG, "CURRENT VOLUME = " + current_volume);
         hideVolumeSlider();
 
         RelativeLayout layout = new RelativeLayout(context);
@@ -132,12 +136,15 @@ public class VolumeSlider extends CordovaPlugin {
         volumeSeekBar.setVisibility(View.INVISIBLE);
     }
 
-    private void setVolumeSlider(int volume) {
-        Log.d(TAG, "Setting the volume: " + volume );
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, volume*audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
+    private void setVolumeSlider(double volume) {
+        // We map volume to a range of 0.0 - 1.0
+        Log.d(TAG, "SET VOLUME TO: " + (int)(volume * audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)));
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (int)(volume * audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)), 0);
     }
+
     private void resetVolumeSlider() {
-        // Revert back to initial volume
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, current_volume, 0);
+        // Resetting back to initial volume
+        Log.d(TAG, "RESET VOLUME TO: " + (int)(current_volume));
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (int)(current_volume), 0);
     }
 }
