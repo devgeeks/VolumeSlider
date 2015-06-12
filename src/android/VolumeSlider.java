@@ -70,7 +70,6 @@ public class VolumeSlider extends CordovaPlugin {
             cordova.getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.d(TAG, "DESIRED VOLUME: " + volume);
                     setVolumeSlider(volume);
                 }
             });
@@ -138,13 +137,13 @@ public class VolumeSlider extends CordovaPlugin {
 
     private void setVolumeSlider(double volume) {
         // We map volume to a range of 0.0 - 1.0
-        Log.d(TAG, "SET VOLUME TO: " + (int)(volume * audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)));
+        Log.d(TAG, "SET VOLUME TO: " + volume);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (int)(volume * audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC)), 0);
     }
 
     private void resetVolumeSlider() {
         // Resetting back to initial volume
-        Log.d(TAG, "RESET VOLUME TO: " + (int)(current_volume));
+        Log.d(TAG, "RESET VOLUME TO: " + current_volume);
         audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (int)(current_volume), 0);
     }
 }
